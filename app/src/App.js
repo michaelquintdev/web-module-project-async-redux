@@ -16,7 +16,9 @@ function App() {
 
   return (
     <div className="App">
-      <p>{console.log(data)}</p>
+      <h1>AniSick</h1>
+      <input />
+      <p>loremipsum</p><br></br>
       {data.map((movie, key) => {
         return <p key = {key}>{movie.title}</p>
       })}
