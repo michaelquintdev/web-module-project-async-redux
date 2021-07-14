@@ -1,29 +1,36 @@
 import './App.css';
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-function App() {
-  const [data, setData] = useState([]);
+import React, { useEffect } from 'react';
+import {connect} from 'react-redux';
+import {fetchData} from './actions/dataAction';
+
+function App(props) {
 
   useEffect(() => {
-    axios.get('https://api.jikan.moe/v3/top/anime/1/favorite')
-    .then((res) => {
-      setData(res.data.top)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }, [])
+    fetchData();
+  },[])
+
+  if(props.loading) {
+    return <><h2>loading.....</h2></>
+  }
 
   return (
     <div className="App">
       <h1>AniSick</h1>
       <input />
       <p>loremipsum</p><br></br>
-      {data.map((movie, key) => {
+      {/* {data.map((movie, key) => {
         return <p key = {key}>{movie.title}</p>
-      })}
+      })} */}
     </div>
   );
 }
 
-export default App;
+  const mapStateToProps = (state) => {
+    return {
+      data: state.dataReducer.data,
+      error: state.dataReducer.error,
+      loading: state.dataReducer.loading,
+    }
+  }
+
+export default connect(mapStateToProps, {fetchData})(App);
