@@ -1,8 +1,8 @@
-import {FETCH_DATA_START, FETCH_DATA_SUCCESS, FETCH_DATA_FAILED} from '../actions/dataAction'
+import {FETCH_DATA_START, FETCH_FAVORITE_DATA_SUCCESS, FETCH_DATA_FAILED} from '../actions/dataAction'
 
 const initialState = {
     loading: false,
-    data: [],
+    favoriteData: [],
     error: '',
 }
 
@@ -13,11 +13,11 @@ export const dataReducer = (state = initialState, action) => {
                 ...state,
                 loading: true,
             }
-        case FETCH_DATA_SUCCESS:
+        case FETCH_FAVORITE_DATA_SUCCESS:
             return {
                 ...state,
                 loading: false,
-                data: action.payload,
+                favoriteData: action.payload,
             }
         case FETCH_DATA_FAILED:
             return {
