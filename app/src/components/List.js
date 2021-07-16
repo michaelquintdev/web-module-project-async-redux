@@ -4,7 +4,7 @@ import {fetchFavoriteData} from '../actions/dataAction';
 
 function List(props) {
     useEffect(() => {
-        fetchFavoriteData();
+        props.fetchFavoriteData();
       },[])
     
       if(props.loading) {
@@ -12,14 +12,16 @@ function List(props) {
       }
     return (
         <div>
-            
+            {props.favoriteData.map((anime) => {
+                return <div><h1>{anime.title}</h1></div>
+            })}
         </div>
     )
 }
 
 const mapStateToProps = (state) => {
     return {
-      favoriteData: state.dataReducer.data,
+      favoriteData: state.dataReducer.favoriteData,
       error: state.dataReducer.error,
       loading: state.dataReducer.loading,
     }
