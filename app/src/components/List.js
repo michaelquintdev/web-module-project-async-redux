@@ -1,20 +1,35 @@
 import React, { useEffect } from 'react';
 import {connect} from 'react-redux';
-import {fetchFavoriteData} from '../actions/dataAction';
+import {fetchFavoriteData, fetchUpcomingData, fetchAiringData} from '../actions/dataAction';
+import Favorites from './ListTypes/Favorites';
+import Upcoming from './ListTypes/Upcoming';
+import Airing from './ListTypes/Airing';
 
 function List(props) {
     useEffect(() => {
         props.fetchFavoriteData();
-      },[])
+        props.fetchUpcomingData();
+        props.fetchAiringData();
+    },[])
     
       if(props.loading) {
         return <><h2>loading.....</h2></>
       }
     return (
         <div>
+          <h2>Favorites</h2>
             {props.favoriteData.map((anime) => {
-                return <div><h1>{anime.title}</h1></div>
+                return <Favorites anime = {anime}/>
             })}
+          <h2>Upcoming</h2>
+            {props.upcomingData.map((anime) => {
+                return <Upcoming anime = {anime}/>
+            })}
+          <h2>Airing</h2>
+            {props.airingData.map((anime) => {
+                return <Airing anime = {anime}/>
+            })}
+          
         </div>
     )
 }
@@ -22,9 +37,11 @@ function List(props) {
 const mapStateToProps = (state) => {
     return {
       favoriteData: state.dataReducer.favoriteData,
+      upcomingData: state.dataReducer.upcomingData,
+      airingData: state.dataReducer.airingData,
       error: state.dataReducer.error,
       loading: state.dataReducer.loading,
     }
   }
 
-export default connect(mapStateToProps, {fetchFavoriteData})(List);
+export default connect(mapStateToProps, {fetchUpcomingData, fetchFavoriteData, fetchAiringData})(List);
