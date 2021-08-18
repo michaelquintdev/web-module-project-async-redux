@@ -51,7 +51,7 @@ export const fetchUpcomingData = () => (dispatch) => {
     
     axios.get(`https://api.jikan.moe/v3/anime/${id}`)
         .then(res => {
-            dispatch({type: FETCH_ANIME_DATA_SUCCESS, payload: res.data.top})
+            dispatch({type: FETCH_ANIME_DATA_SUCCESS, payload: res.data})
         })
         .catch((err) => {
           dispatch({type: FETCH_DATA_FAILED, payload: err})

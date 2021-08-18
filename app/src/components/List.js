@@ -27,13 +27,13 @@ function List(props) {
             })}
           <h2>Upcoming</h2>
             {props.upcomingData.map((anime, idx) => {
-                return <Link to = {`/${anime.mal_id}`} key = {idx}>
+                return <Link to = {`/anime/${anime.mal_id}`} key = {idx}>
                           <Upcoming key = {idx} anime = {anime} />
                        </Link>
             })}
           <h2>Airing</h2>
             {props.airingData.map((anime, idx) => {
-                return <Link to = {`/${anime.mal_id}`} key = {idx}>
+                return <Link to = {`/anime/${anime.mal_id}`} key = {idx}>
                           <Airing key = {idx} anime = {anime} />
                        </Link>
             })}
