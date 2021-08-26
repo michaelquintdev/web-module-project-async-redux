@@ -12,7 +12,6 @@ export const fetchFavoriteData = () => (dispatch) => {
     
     axios.get('https://api.jikan.moe/v3/top/anime/1/favorite')
     .then((res) => {
-      console.log('FAVORITE: ', res.data)
       dispatch({type: FETCH_FAVORITE_DATA_SUCCESS, payload: res.data.top})
     })
     .catch((err) => {
@@ -25,7 +24,6 @@ export const fetchUpcomingData = () => (dispatch) => {
     
     axios.get('https://api.jikan.moe/v3/top/anime/1/upcoming')
     .then((res) => {
-      console.log('UPCOMING: ', res.data)
       dispatch({type: FETCH_UPCOMING_DATA_SUCCESS, payload: res.data.top})
     })
     .catch((err) => {
@@ -38,7 +36,6 @@ export const fetchUpcomingData = () => (dispatch) => {
     
     axios.get('https://api.jikan.moe/v3/top/anime/1/airing')
     .then((res) => {
-      console.log('AIRING: ', res.data)
       dispatch({type: FETCH_AIRING_DATA_SUCCESS, payload: res.data.top})
     })
     .catch((err) => {

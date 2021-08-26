@@ -10,10 +10,15 @@ function Anime(props) {
         props.fetchAnime(id);
     }, [])
 
+    if(props.loading){
+        return <h2>Loading Anime....</h2>
+    }
+
     return (
         <div>
             <h2>{props.animeData.title}</h2>
             <img src = {props.animeData.image_url} />
+            <h3>{props.animeData.title} Trailer</h3>
         </div>
     )
 }
