@@ -28,7 +28,7 @@ function Register() {
         <div>
             <h2>Welcome to AniMerch! Sign Up Below</h2>
             <form>
-                <div classname = 'form-errors'>{formErrors.username}</div>
+                <div className = 'form-errors'>{formErrors.username}</div>
                 <input 
                     type='username'
                     name='username'

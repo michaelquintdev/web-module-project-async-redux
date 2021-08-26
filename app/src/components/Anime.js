@@ -16,8 +16,8 @@ function Anime(props) {
 
     return (
         <div>
-            <h2>{props.animeData.title}</h2>
-            <img src = {props.animeData.image_url} />
+            <h2>{props.animeData.title_english}</h2>
+            <img src = {props.animeData.image_url} alt = 'Animes cover art'/>
             <h3>{props.animeData.title} Trailer</h3>
         </div>
     )
