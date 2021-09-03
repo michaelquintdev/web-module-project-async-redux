@@ -1,12 +1,16 @@
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
+import {handleLogin} from '../actions/userActions'
 
-function Login() {
+function Login(props) {
     const initialLogin = {username: '', password: ''}
     const [input, setInput] = useState(initialLogin)
 
     const submitHandler = (event) => {
         event.preventDefault()
+        props.handleLogin(input)
+        setInput(initialLogin)
     }
 
     const changeHandler = (event) => {
@@ -32,8 +36,17 @@ function Login() {
                 <button onClick={submitHandler}>Submit</button>
             </form>
             <p>Don't have an account? <Link to = '/register'>Sign Up Here</Link></p>
+            <div className = 'form-errors'>
+                {props.errors}
+            </div>
         </div>
     )
 }
 
-export default Login
+const mapStateToProps = (state) => {
+    return{
+        errors: state.userReducer.errors
+    }
+}
+
+export default connect(mapStateToProps, {handleLogin})(Login)
