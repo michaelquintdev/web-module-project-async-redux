@@ -1,15 +1,29 @@
 import React, {useState} from 'react'
 import {reach} from 'yup'
 import schema from '../validation/formSchema'
+import axios from 'axios'
 
 function Register() {
     const initialRegister = {username: '', password: ''}
     const [input, setInput] = useState(initialRegister)
     const [formErrors, setFormErrors] = useState(initialRegister)
 
+    const postNewAccount = async (newAccount) =>{
+        try {
+             const response = await axios.post('https://animenu.herokuapp.com/api/auth/register', newAccount)
+                console.log(response)
+        }catch(err){
+            console.log(err)
+        }    
+    }
+
     const submitHandler = (event) => {
         event.preventDefault()
-        setInput(initialRegister)
+        const newAccount = {
+            username: input.username.trim(),
+            password: input.password.trim(),
+        }
+        postNewAccount(newAccount)
     }
 
     const validate = (name, value) => {
@@ -35,7 +49,7 @@ function Register() {
                     onChange={changeHandler}
                     value={input.username}
                 />
-                <div classname = 'form-errors'>{formErrors.password}</div>
+                <div className = 'form-errors'>{formErrors.password}</div>
                 <input 
                     type='password'
                     name='password'

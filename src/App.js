@@ -6,24 +6,21 @@ import Anime from './components/Anime';
 import Login from './components/Login';
 import Register from './components/Register';
 import Profile from './components/Profile';
-
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
 
   return (
       <div className="App">
         <nav>
-          <Link to = '/'>AniMerch</Link>
+          <Link to = '/'>AniMenu</Link>
           <Link to = '/login'>Login</Link>
           <Link to = '/register'>Register</Link>
-          <Link to = '/profile'>Profile</Link>
         </nav>
         <Switch>
+        <PrivateRoute path = '/dashboard' component={Profile} />
           <Route path = '/anime/:id'>
             <Anime />
-          </Route>
-          <Route path = '/profile'>
-            <Profile />
           </Route>
           <Route path = '/login'>
             <Login />
