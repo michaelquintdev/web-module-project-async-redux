@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { fetchAnime } from '../actions/dataAction'
 import {connect} from 'react-redux';
 
