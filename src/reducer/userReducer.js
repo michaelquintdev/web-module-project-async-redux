@@ -1,4 +1,4 @@
-import {LOGIN_SUCCESS, LOGIN_ERROR} from '../actions/userActions'
+import {LOGIN_SUCCESS, LOGIN_ERROR, LOG_OUT_SUCCESS} from '../actions/userActions'
 
 export const initialState = {
     user: {
@@ -9,6 +9,7 @@ export const initialState = {
     },
     message: '',
     errors: '',
+    isLoggedIn: false,
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -20,11 +21,17 @@ export const userReducer = (state = initialState, action) => {
                 username: action.payload.username,
                 message: `Welcome ${action.payload.username}!`,
                 errors: '',
+                isLoggedIn: true,
             }
         case LOGIN_ERROR:
             return {
                 ...state,
-                errors: action.payload.message,
+                errors: action.payload,
+            }
+        case LOG_OUT_SUCCESS:
+            return {
+                ...state,
+                isLoggedIn: action.payload,
             }
         default:
             return state;
