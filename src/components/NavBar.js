@@ -17,8 +17,8 @@ function NavBar({isLoggedIn, logOut}) {
             <Link to = '/'>AniMenu</Link>
             <nav>
                 { !isLoggedIn && <Link to='/login'>Login</Link>}
-                { isLoggedIn ? <Link onClick = {handleLogout}>Log Out</Link> : <Link to = '/signup'>Sign Up</Link>}
-                { isLoggedIn && <Link to="/dashboard">Profile</Link>}
+                { isLoggedIn ? <Link onClick = {handleLogout}>Log Out</Link> : <Link to = '/register'>Register</Link>}
+                { isLoggedIn && <Link to="/dashboard">Dashboard</Link>}
             </nav>
         </div>
     )

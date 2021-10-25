@@ -1,11 +1,19 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {handleLogin} from '../actions/userActions'
+import { useHistory } from 'react-router-dom'
 
 function Login(props) {
     const initialLogin = {username: '', password: ''}
     const [input, setInput] = useState(initialLogin)
+    const {push} = useHistory()
+    
+    useEffect(() => {
+        if(props.isLoggedIn){
+            push('/dashboard')
+        }
+    },[props.isLoggedIn])
 
     const submitHandler = (event) => {
         event.preventDefault()
@@ -45,6 +53,7 @@ function Login(props) {
 
 const mapStateToProps = (state) => {
     return{
+        isLoggedIn: state.userReducer.isLoggedIn,
         errors: state.userReducer.errors
     }
 }
