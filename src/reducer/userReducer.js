@@ -1,4 +1,4 @@
-import {LOGIN_SUCCESS, LOGIN_ERROR, LOG_OUT_SUCCESS} from '../actions/userActions'
+import {LOGIN_SUCCESS, LOGIN_ERROR, LOG_OUT_SUCCESS, REGISTER_ERROR, REGISTER_SUCCESS} from '../actions/userActions'
 
 export const initialState = {
     user: {
@@ -10,6 +10,7 @@ export const initialState = {
     message: '',
     errors: '',
     isLoggedIn: false,
+    isRegistered: false,
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -32,6 +33,16 @@ export const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoggedIn: action.payload,
+            }
+        case REGISTER_SUCCESS:
+            return {
+                ...state,
+                isRegistered: true,
+            }
+        case REGISTER_ERROR:
+            return {
+                ...state,
+                errors: action.payload,
             }
         default:
             return state;
