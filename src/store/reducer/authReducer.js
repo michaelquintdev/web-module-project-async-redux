@@ -2,7 +2,7 @@ import {LOGIN_SUCCESS, LOGIN_ERROR, LOG_OUT_SUCCESS, REGISTER_ERROR, REGISTER_SU
 
 export const initialState = {
     user: {
-        id: 0,
+        user_id: 0,
         username: '',
         animes: [],
         friends: [],
@@ -13,15 +13,17 @@ export const initialState = {
     isRegistered: false,
 }
 
-export const userReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action) => {
     switch(action.type){
         case LOGIN_SUCCESS:
             return {
                 ...state,
-                id: action.payload.user_id,
-                username: action.payload.username,
-                message: `Welcome ${action.payload.username}!`,
-                errors: '',
+                user: {
+                    user_id: action.payload.id,
+                    username: '',
+                    animes: [],
+                    friends: [],
+                },
                 isLoggedIn: true,
             }
         case LOGIN_ERROR:

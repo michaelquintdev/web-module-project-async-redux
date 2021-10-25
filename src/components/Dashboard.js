@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
 
-function Profile(props) {
+function Dashboard(props) {
     useEffect(() => {
-        console.log(props.user)
+        console.log(props.id)
     })
     return (
         <div>
@@ -14,8 +14,8 @@ function Profile(props) {
 
 const mapStateToProps = state => {
     return {
-        user: state.userReducer.user
+        id: state.authReducer.user.user_id
     }
 }
 
-export default connect(mapStateToProps, {})(Profile)
+export default connect(mapStateToProps, {})(Dashboard)

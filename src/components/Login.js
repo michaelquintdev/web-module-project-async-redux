@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {handleLogin} from '../actions/userActions'
+import {handleLogin} from '../store/actions/userActions'
 import { useHistory } from 'react-router-dom'
 
 function Login(props) {
@@ -53,8 +53,8 @@ function Login(props) {
 
 const mapStateToProps = (state) => {
     return{
-        isLoggedIn: state.userReducer.isLoggedIn,
-        errors: state.userReducer.errors
+        isLoggedIn: state.authReducer.isLoggedIn,
+        errors: state.authReducer.errors
     }
 }
 

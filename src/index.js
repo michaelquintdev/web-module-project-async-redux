@@ -5,11 +5,12 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
-import reducers from './reducer/index'
+import reducers from './store/reducer/index'
 import thunk from 'redux-thunk'
+import logger from 'redux-logger'
 import reportWebVitals from './reportWebVitals';
 
-const store = createStore(reducers, applyMiddleware(thunk));
+const store = createStore(reducers, applyMiddleware(thunk, logger));
 
 ReactDOM.render(
   <Provider store = {store}>

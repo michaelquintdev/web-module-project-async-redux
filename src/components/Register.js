@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
 import {reach} from 'yup'
 import schema from '../validation/formSchema'
-import { handleRegister } from '../actions/userActions'
+import { handleRegister } from '../store/actions/userActions'
 import { useHistory } from 'react-router-dom'
 
 function Register(props) {
@@ -67,8 +67,8 @@ function Register(props) {
 
 const mapStateToProps = (state) => {
     return{
-        errors: state.userReducer.errors,
-        isRegistered: state.userReducer.isRegistered
+        errors: state.authReducer.errors,
+        isRegistered: state.authReducer.isRegistered
     }
 }
 
