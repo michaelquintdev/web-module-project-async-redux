@@ -9,9 +9,9 @@ function Dashboard(props) {
         props.getProfileData(props.id)
     },[])
 
-    setTimeout(() => {
+    useEffect(() => {
         props.fetchProfileAnimes(props.user.animes)
-    }, 10000)
+    }, [props.user.animes])
 
     if(props.loadingUserData){
         return <h1>Loading User Data...</h1>
