@@ -27,7 +27,7 @@ function Dashboard(props) {
             {props.user.friends.map(friend => {
                 return <h2>Friends: {friend}</h2>
             })}
-            {props.loading ? <h2>heyo</h2> : props.user.animes.map((user, idx) => {
+            {props.user.animes.map((user, idx) => {
                 return <ListEntry key={user.anime_id} user={user} idx={idx}/>
             })}
         </div>
