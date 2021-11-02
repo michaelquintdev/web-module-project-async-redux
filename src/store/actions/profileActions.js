@@ -23,9 +23,9 @@ export const getProfileData = (id) => (dispatch) => {
         })
 }
 
-export const addAnimeToList = (anime_id) => (dispatch) => {
+export const addAnimeToList = (anime) => (dispatch) => {
     dispatch({type: POST_ANIME_START})
-    axios.post('https://animenu.herokuapp.com/api/lists', anime_id)
+    axios.post('https://animenu.herokuapp.com/api/lists', anime)
         .then(res => {
             dispatch({type: POST_ANIME_SUCCESS, payload: res})
         }).catch(error => {
