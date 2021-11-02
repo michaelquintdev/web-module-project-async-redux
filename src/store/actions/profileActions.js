@@ -1,4 +1,5 @@
 import axios from "axios"
+import axiosWithAuth from '../../utils/axiosWithAuth'
 
 export const GETTING_USER_START = "GETTING_USER_START";
 export const GETTING_USER_SUCCESS = "GETTING_USER_SUCCESS";
@@ -12,6 +13,8 @@ export const POST_ANIME_START = 'POST_ANIME_START';
 export const POST_ANIME_SUCCESS = 'POST_ANIME_SUCCESS';
 export const POST_ANIME_ERROR = 'POST_ANIME_ERROR';
 
+export const RESET_DATA = 'RESET_DATA';
+
 export const getProfileData = (id) => (dispatch) => {
     dispatch({type: GETTING_USER_START})
     axios.get(`https://animenu.herokuapp.com/api/users/${id}`)
@@ -24,8 +27,7 @@ export const getProfileData = (id) => (dispatch) => {
 }
 
 export const addAnimeToList = (anime) => (dispatch) => {
-    dispatch({type: POST_ANIME_START})
-    axios.post('https://animenu.herokuapp.com/api/lists', anime)
+    axiosWithAuth().post('https://animenu.herokuapp.com/api/lists', anime)
         .then(res => {
             dispatch({type: POST_ANIME_SUCCESS, payload: res})
         }).catch(error => {
@@ -44,4 +46,7 @@ export const fetchProfileAnimes = (animes) => (dispatch) => {
         dispatch({type:FETCH_PROFILE_ANIME_ERROR, payload: error})
     })
   }
+export const resetData = () => {
+    return {type: RESET_DATA}
+}
   

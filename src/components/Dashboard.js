@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
-import {getProfileData, fetchProfileAnimes} from '../store/actions/profileActions'
+import {getProfileData, fetchProfileAnimes, resetData} from '../store/actions/profileActions'
 import ListEntry from './ListEntry'
 
 
 function Dashboard(props) {
     useEffect(() => {
+        props.resetData()
         props.getProfileData(props.id)
     },[])
 
@@ -45,4 +46,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, {getProfileData, fetchProfileAnimes})(Dashboard)
+export default connect(mapStateToProps, {getProfileData, fetchProfileAnimes, resetData})(Dashboard)

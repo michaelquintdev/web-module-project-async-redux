@@ -1,4 +1,4 @@
-import {GETTING_USER_FAILED, GETTING_USER_SUCCESS,FETCH_PROFILE_ANIME_START, FETCH_PROFILE_ANIME_SUCCESS, FETCH_PROFILE_ANIME_ERROR} from '../actions/profileActions'
+import {GETTING_USER_FAILED, GETTING_USER_SUCCESS,FETCH_PROFILE_ANIME_START, FETCH_PROFILE_ANIME_SUCCESS, RESET_DATA} from '../actions/profileActions'
 
 export const initialState = {
     user: {
@@ -40,12 +40,8 @@ export const profileReducer = (state = initialState, action) => {
                 errors: '',
                 loading: false,
             }
-        // case FETCH_PROFILE_ANIME_ERROR:
-        //     return {
-        //         ...state,
-        //         errors: action.payload,
-        //         loading: false,
-        //     }
+        case RESET_DATA:
+            return initialState;
         default:
             return state;
     }
