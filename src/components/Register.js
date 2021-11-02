@@ -1,29 +1,29 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
+import {connect} from 'react-redux'
 import {reach} from 'yup'
 import schema from '../validation/formSchema'
-import axios from 'axios'
+import { handleRegister } from '../store/actions/userActions'
+import { useHistory } from 'react-router-dom'
 
-function Register() {
+function Register(props) {
     const initialRegister = {username: '', password: ''}
     const [input, setInput] = useState(initialRegister)
     const [formErrors, setFormErrors] = useState(initialRegister)
+    const { push } = useHistory();
+    
+    useEffect(() => {
+        if(props.isRegistered){
+            push('/login')
+        }
+    },[props.isRegistered])
 
-    const postNewAccount = async (newAccount) =>{
-        try {
-             const response = await axios.post('https://animenu.herokuapp.com/api/auth/register', newAccount)
-                console.log(response)
-        }catch(err){
-            console.log(err)
-        }    
-    }
-
-    const submitHandler = (event) => {
+    const submitHandler = async (event) => {
         event.preventDefault()
         const newAccount = {
             username: input.username.trim(),
             password: input.password.trim(),
         }
-        postNewAccount(newAccount)
+        props.handleRegister(newAccount)
     }
 
     const validate = (name, value) => {
@@ -58,8 +58,18 @@ function Register() {
                 />
                 <button onClick={submitHandler}>Submit</button>
             </form>
+            <div className = 'form-errors'>
+                {props.errors}
+            </div>
         </div>
     )
 }
 
-export default Register
+const mapStateToProps = (state) => {
+    return{
+        errors: state.authReducer.errors,
+        isRegistered: state.authReducer.isRegistered
+    }
+}
+
+export default connect(mapStateToProps, {handleRegister})(Register)

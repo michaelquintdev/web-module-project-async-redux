@@ -1,24 +1,23 @@
 import './App.css';
 import React from 'react'
-import { Route, Switch, Link } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import Home from './components/Home'
 import Anime from './components/Anime';
 import Login from './components/Login';
 import Register from './components/Register';
-import Profile from './components/Profile';
 import PrivateRoute from './components/PrivateRoute';
+import NavBar from './components/NavBar';
+import Dashboard from './components/Dashboard';
 
-function App() {
+function App({isLoggedIn}) {
 
   return (
       <div className="App">
-        <nav>
-          <Link to = '/'>AniMenu</Link>
-          <Link to = '/login'>Login</Link>
-          <Link to = '/register'>Register</Link>
-        </nav>
+        <NavBar />
+
+        {/* Switches */}
         <Switch>
-        <PrivateRoute path = '/dashboard' component={Profile} />
+        <PrivateRoute path = '/dashboard' component={Dashboard} />
           <Route path = '/anime/:id'>
             <Anime />
           </Route>
@@ -37,4 +36,4 @@ function App() {
   );
 }
 
-export default App;
+export default App
