@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {connect} from 'react-redux';
-import {fetchFavoriteData, fetchUpcomingData, fetchAiringData} from '../actions/dataAction';
+import {fetchFavoriteData, fetchUpcomingData, fetchAiringData} from '../store/actions/dataAction';
 import { Link } from 'react-router-dom';
 
 import Favorites from './ListTypes/Favorites';

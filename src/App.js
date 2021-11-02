@@ -5,9 +5,9 @@ import Home from './components/Home'
 import Anime from './components/Anime';
 import Login from './components/Login';
 import Register from './components/Register';
-import Profile from './components/Profile';
 import PrivateRoute from './components/PrivateRoute';
 import NavBar from './components/NavBar';
+import Dashboard from './components/Dashboard';
 
 function App({isLoggedIn}) {
 
@@ -17,7 +17,7 @@ function App({isLoggedIn}) {
 
         {/* Switches */}
         <Switch>
-        <PrivateRoute path = '/dashboard' component={Profile} />
+        <PrivateRoute path = '/dashboard' component={Dashboard} />
           <Route path = '/anime/:id'>
             <Anime />
           </Route>

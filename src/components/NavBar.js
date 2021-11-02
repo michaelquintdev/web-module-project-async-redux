@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import {logOut} from '../actions/userActions'
+import {logOut} from '../store/actions/userActions'
 
 function NavBar({isLoggedIn, logOut}) {
     const {push} = useHistory()
@@ -26,7 +26,7 @@ function NavBar({isLoggedIn, logOut}) {
 
 const mapStateToProps = (state) => {
     return {
-      isLoggedIn: state.userReducer.isLoggedIn,
+      isLoggedIn: state.authReducer.isLoggedIn,
     }
   }
 
