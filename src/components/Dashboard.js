@@ -1,12 +1,11 @@
 import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
-import {getProfileData, fetchProfileAnimes, resetData} from '../store/actions/profileActions'
+import {getProfileData, fetchProfileAnimes} from '../store/actions/profileActions'
 import ListEntry from './ListEntry'
 
 
 function Dashboard(props) {
     useEffect(() => {
-        props.resetData()
         props.getProfileData(props.id)
     },[])
 
@@ -25,9 +24,9 @@ function Dashboard(props) {
     return (
         <div>
             <h1>{props.user.username}</h1>
-            {props.user.friends.map(friend => {
-                return <h2>Friends: {friend}</h2>
-            })}
+            <h2>Friends: {props.user.friends.map(friend => {
+                return friend + ', '
+            })}</h2>
             {props.user.animes.map((user, idx) => {
                 return <ListEntry key={user.anime_id} user={user} idx={idx}/>
             })}
@@ -46,4 +45,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, {getProfileData, fetchProfileAnimes, resetData})(Dashboard)
+export default connect(mapStateToProps, {getProfileData, fetchProfileAnimes})(Dashboard)

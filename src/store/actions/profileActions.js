@@ -13,7 +13,6 @@ export const POST_ANIME_START = 'POST_ANIME_START';
 export const POST_ANIME_SUCCESS = 'POST_ANIME_SUCCESS';
 export const POST_ANIME_ERROR = 'POST_ANIME_ERROR';
 
-export const RESET_DATA = 'RESET_DATA';
 
 export const getProfileData = (id) => (dispatch) => {
     dispatch({type: GETTING_USER_START})
@@ -29,7 +28,12 @@ export const getProfileData = (id) => (dispatch) => {
 export const addAnimeToList = (anime) => (dispatch) => {
     axiosWithAuth().post('https://animenu.herokuapp.com/api/lists', anime)
         .then(res => {
-            dispatch({type: POST_ANIME_SUCCESS, payload: res})
+            dispatch({type: POST_ANIME_SUCCESS, payload: {
+                anime_id: anime.anime_id,
+                completed: anime.completed,
+                list_id: res.data.list_id,
+                rating: anime.rating
+            }})
         }).catch(error => {
             dispatch({type: POST_ANIME_ERROR, action: error.message})
         })
@@ -46,7 +50,4 @@ export const fetchProfileAnimes = (animes) => (dispatch) => {
         dispatch({type:FETCH_PROFILE_ANIME_ERROR, payload: error})
     })
   }
-export const resetData = () => {
-    return {type: RESET_DATA}
-}
   
