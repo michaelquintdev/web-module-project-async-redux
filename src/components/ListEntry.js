@@ -1,16 +1,16 @@
 import {connect} from 'react-redux';
 
-function ListEntry({profileAnimes, idx, error, user, anime}) {
+function ListEntry({userAnimes, idx, error, user, anime}) {
     return(
                 <div>
-                    {profileAnimes.length === 0 
+                    {userAnimes.length === 0 
                     ? <h2>loading...</h2> 
                     : <div>
-                        <h2>{profileAnimes[idx].data.title_english}</h2>
+                        <h2>{userAnimes[idx].data.title_english}</h2>
                         <h4>Completed: {user.completed === 1 ? <p>Yes</p> : <p>No</p>}</h4>
                         <h4>Rating: {user.rating}</h4>
-                        <img src={profileAnimes[idx].data.image_url} alt="Movie's Poster"/>
-                        <p>{profileAnimes[idx].data.synopsis}</p>
+                        <img src={userAnimes[idx].data.image_url} alt="Movie's Poster"/>
+                        <p>{userAnimes[idx].data.synopsis}</p>
                     </div>
                     }
                 </div>
@@ -19,8 +19,8 @@ function ListEntry({profileAnimes, idx, error, user, anime}) {
 
 const mapStateToProps = (state) => {
     return {
-        profileAnimes: state.profileReducer.profileAnimes,
-        error: state.profileReducer.errors,
+        userAnimes: state.authReducer.userAnimes,
+        error: state.authReducer.errors,
     }
 }
 

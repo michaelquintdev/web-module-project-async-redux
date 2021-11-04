@@ -8,6 +8,7 @@ import Register from './components/Register';
 import PrivateRoute from './components/PrivateRoute';
 import NavBar from './components/NavBar';
 import Dashboard from './components/Dashboard';
+import FriendsPage from './components/FriendsPage';
 
 function App({isLoggedIn}) {
 
@@ -18,6 +19,7 @@ function App({isLoggedIn}) {
         {/* Switches */}
         <Switch>
         <PrivateRoute path = '/dashboard' component={Dashboard} />
+        <PrivateRoute exact path = '/list/:id' component={FriendsPage} />
           <Route path = '/anime/:id'>
             <Anime />
           </Route>
