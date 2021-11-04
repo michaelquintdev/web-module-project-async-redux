@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {handleLogin} from '../store/actions/userActions'
+import {handleLogin, getUserData} from '../store/actions/userActions'
 import { useHistory } from 'react-router-dom'
 
 function Login(props) {
@@ -11,10 +11,16 @@ function Login(props) {
     
     useEffect(() => {
         if(props.isLoggedIn){
-            push('/dashboard')
+            props.getUserData(props.id)
         }
     },[props.isLoggedIn])
 
+    useEffect(() => {
+        if(props.userFetched){
+            push('/dashboard')
+        }
+    }, [props.userFetched])
+    
     const submitHandler = (event) => {
         event.preventDefault()
         props.handleLogin(input)
@@ -54,8 +60,10 @@ function Login(props) {
 const mapStateToProps = (state) => {
     return{
         isLoggedIn: state.authReducer.isLoggedIn,
-        errors: state.authReducer.errors
+        userFetched: state.authReducer.userFetched,
+        errors: state.authReducer.errors,
+        id: state.authReducer.user.user_id
     }
 }
 
-export default connect(mapStateToProps, {handleLogin})(Login)
+export default connect(mapStateToProps, {handleLogin, getUserData})(Login)

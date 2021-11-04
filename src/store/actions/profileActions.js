@@ -1,41 +1,22 @@
 import axios from "axios"
-import axiosWithAuth from '../../utils/axiosWithAuth'
 
-export const GETTING_USER_START = "GETTING_USER_START";
-export const GETTING_USER_SUCCESS = "GETTING_USER_SUCCESS";
-export const GETTING_USER_FAILED = "GETTING_USER_FAILED";
+export const GETTING_PROFILE_START = "GETTING_PROFILE_START";
+export const GETTING_PROFILE_SUCCESS = "GETTING_PROFILE_SUCCESS";
+export const GETTING_PROFILE_FAILED = "GETTING_PROFILE_FAILED";
 
 export const FETCH_PROFILE_ANIME_START = 'FETCH_PROFILE_ANIME_START';
 export const FETCH_PROFILE_ANIME_SUCCESS = 'FETCH_PROFILE_ANIME_SUCCESS';
 export const FETCH_PROFILE_ANIME_ERROR = 'FETCH_PROFILE_ANIME_ERROR';
 
-export const POST_ANIME_START = 'POST_ANIME_START';
-export const POST_ANIME_SUCCESS = 'POST_ANIME_SUCCESS';
-export const POST_ANIME_ERROR = 'POST_ANIME_ERROR';
-
 
 export const getProfileData = (id) => (dispatch) => {
-    dispatch({type: GETTING_USER_START})
+    dispatch({type: GETTING_PROFILE_START})
     axios.get(`https://animenu.herokuapp.com/api/users/${id}`)
         .then(res => {
-            dispatch({type: GETTING_USER_SUCCESS, payload: res.data})
+            dispatch({type: GETTING_PROFILE_SUCCESS, payload: res.data})
         })
         .catch(err => {
-            dispatch({type: GETTING_USER_FAILED, payload: err.message})
-        })
-}
-
-export const addAnimeToList = (anime) => (dispatch) => {
-    axiosWithAuth().post('https://animenu.herokuapp.com/api/lists', anime)
-        .then(res => {
-            dispatch({type: POST_ANIME_SUCCESS, payload: {
-                anime_id: anime.anime_id,
-                completed: anime.completed,
-                list_id: res.data.list_id,
-                rating: anime.rating
-            }})
-        }).catch(error => {
-            dispatch({type: POST_ANIME_ERROR, action: error.message})
+            dispatch({type: GETTING_PROFILE_FAILED, payload: err.message})
         })
 }
 

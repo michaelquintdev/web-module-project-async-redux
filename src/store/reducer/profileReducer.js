@@ -1,4 +1,4 @@
-import {GETTING_USER_FAILED, GETTING_USER_SUCCESS,FETCH_PROFILE_ANIME_START, FETCH_PROFILE_ANIME_SUCCESS, POST_ANIME_SUCCESS, POST_ANIME_ERROR} from '../actions/profileActions'
+import {GETTING_PROFILE_FAILED, GETTING_PROFILE_SUCCESS, FETCH_PROFILE_ANIME_START, FETCH_PROFILE_ANIME_SUCCESS} from '../actions/profileActions'
 
 export const initialState = {
     user: {
@@ -16,14 +16,14 @@ export const initialState = {
 
 export const profileReducer = (state = initialState, action) => {
     switch(action.type){
-        case GETTING_USER_SUCCESS:
+        case GETTING_PROFILE_SUCCESS:
             return {
                 ...state,
                 user: action.payload,
                 errors: '',
                 loadingUserData: false,
             }
-        case GETTING_USER_FAILED:
+        case GETTING_PROFILE_FAILED:
             return {
                 ...state,
                 loadingUserData: false,
@@ -40,21 +40,6 @@ export const profileReducer = (state = initialState, action) => {
                 profileAnimes: action.payload,
                 errors: '',
                 loading: false,
-            }
-        case POST_ANIME_SUCCESS:
-            return {
-                ...state,
-                user: {
-                    ...state.user,
-                    animes: [...state.user.animes, action.payload]
-                },
-            }
-        case POST_ANIME_ERROR:
-            return {
-                user: {
-                    ...state,
-                    postErrors: action.payload,
-                }
             }
         default:
             return state;

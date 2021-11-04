@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
 import { fetchAnime } from '../store/actions/dataAction'
-import { addAnimeToList } from '../store/actions/profileActions'
+import { addAnimeToList } from '../store/actions/userActions'
 import {connect} from 'react-redux';
 
 const initialState = {
@@ -39,6 +39,9 @@ function Anime(props) {
     if(props.loading){
         return <h2>Loading Anime....</h2>
     }
+    if(props.error){
+        return <h2>Couldn't load anime :(</h2>
+    }
 
     return (
         <div>
@@ -59,7 +62,9 @@ function Anime(props) {
                 <input name='rating' onChange={onChange} value={formValues.rating}/>
                 <button onClick={onSubmit}>Add to List</button>
             </form>}
-
+            {props.postErrors.length !== 0 ? <h4>{props.postErrors}</h4> : null}
+            
+            <h3>Synopsis</h3>
             <p>{props.animeData.synopsis}</p>
             <h3>{props.animeData.title} Trailer</h3>
             <iframe width="900" height="600" src = {props.animeData.trailer_url}/>
@@ -74,6 +79,7 @@ const mapStateToProps = (state) => {
         user_id: state.authReducer.user.user_id,
         error: state.dataReducer.error,
         loading: state.dataReducer.loading,
+        postErrors: state.authReducer.postErrors,
     }
 }
 
