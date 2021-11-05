@@ -33,7 +33,6 @@ function Anime(props) {
             rating: parseInt(formValues.rating),
         }
         props.addAnimeToList(newAnime);
-        console.log(newAnime)
     }
 
     if(props.loading){

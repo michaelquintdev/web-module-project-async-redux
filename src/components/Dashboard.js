@@ -25,7 +25,7 @@ function Dashboard(props) {
                 return <Link key = {friend} to={`/list/${friend}`}>{friend}</Link>
             })}</h2>
             {props.user.animes.length === props.userAnimes.length ? props.user.animes.map((user, idx) => {
-                return <ListEntry key={user.anime_id} user={user} idx={idx}/>
+                return <ListEntry key={user.anime_id} idx={idx}/>
             }) : <h2>Loading Anime Data...</h2>}
         </div>
     )

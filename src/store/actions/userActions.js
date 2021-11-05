@@ -4,6 +4,7 @@ import axiosWithAuth from '../../utils/axiosWithAuth'
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_ERROR = "LOGIN_ERROR";
 export const LOG_OUT_SUCCESS = "LOG_OUT_SUCCESS";
+export const EDITING_CHANGE = "EDITING_CHANGE";
 
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_ERROR = "REGISTER_ERROR";
@@ -19,6 +20,10 @@ export const FETCH_USER_ANIME_ERROR = "FETCH_USER_ANIME_ERROR";
 export const POST_ANIME_START = 'POST_ANIME_START';
 export const POST_ANIME_SUCCESS = 'POST_ANIME_SUCCESS';
 export const POST_ANIME_ERROR = 'POST_ANIME_ERROR';
+
+export const PUT_ANIME_START = 'PUT_ANIME_START';
+export const PUT_ANIME_SUCCESS = 'PUT_ANIME_SUCCESS';
+export const PUT_ANIME_ERROR = 'PUT_ANIME_ERROR';
 
 export const GETTING_USER_FRIENDS_START = "GETTING_USER_FRIENDS_START";
 export const GETTING_USER_FRIENDS_SUCCESS = "GETTING_USER_FRIENDS_SUCCESS";
@@ -37,6 +42,9 @@ export const handleLogin = (user) => (dispatch) => {
 
 export const logOut = () => {
     return {type: LOG_OUT_SUCCESS, payload: false}
+}
+export const editing = () => {
+    return {type: EDITING_CHANGE, payload: true}
 }
 
 export const handleRegister = (user) => (dispatch) => {
@@ -85,7 +93,7 @@ export const fetchUserAnimes = (animes) => (dispatch) => {
     })
   }
 
-  export const addAnimeToList = (anime) => (dispatch) => {
+export const addAnimeToList = (anime) => (dispatch) => {
     axiosWithAuth().post('https://animenu.herokuapp.com/api/lists', anime)
         .then(res => {
             dispatch({type: POST_ANIME_SUCCESS, payload: {
@@ -96,5 +104,16 @@ export const fetchUserAnimes = (animes) => (dispatch) => {
             }})
         }).catch(error => {
             dispatch({type: POST_ANIME_ERROR, action: error.response.data.message})
+        })
+}
+
+export const updateAnime = (id, anime) => (dispatch) => {
+    const {idx, ...rest} = anime;
+    dispatch({ type: PUT_ANIME_START })
+    axiosWithAuth().put(`https://animenu.herokuapp.com/api/lists/${id}`, rest)
+        .then(res => {
+            dispatch({type: PUT_ANIME_SUCCESS, payload: {list_id: res.data[0].list_id, rest, idx}})
+        }).catch(error => {
+            dispatch({type: PUT_ANIME_ERROR, action: error.response.data.message})
         })
 }
