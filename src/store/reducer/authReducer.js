@@ -1,4 +1,4 @@
-import {LOGIN_SUCCESS, LOGIN_ERROR, LOG_OUT_SUCCESS, REGISTER_ERROR, REGISTER_SUCCESS, GETTING_USER_SUCCESS, GETTING_USER_FAILED, FETCH_USER_ANIME_START, FETCH_USER_ANIME_SUCCESS, FETCH_USER_ANIME_ERROR, POST_ANIME_SUCCESS, POST_ANIME_ERROR} from '../actions/userActions'
+import {LOGIN_SUCCESS, LOGIN_ERROR, LOG_OUT_SUCCESS, REGISTER_ERROR, REGISTER_SUCCESS, GETTING_USER_SUCCESS, GETTING_USER_FAILED, FETCH_USER_ANIME_START, FETCH_USER_ANIME_SUCCESS, FETCH_USER_ANIME_ERROR, POST_ANIME_SUCCESS, POST_ANIME_ERROR, GETTING_USER_FRIENDS_START, GETTING_USER_FRIENDS_SUCCESS, GETTING_USER_FRIENDS_FAILED} from '../actions/userActions'
 
 export const initialState = {
     user: {
@@ -9,10 +9,12 @@ export const initialState = {
     },
     userAnimes: [],
     loading: false,
+    loadingFriends: false,
     message: '',
     userFetched: false,
     isLoggedIn: false,
     isRegistered: false,
+    isEditing: false,
     errors: '',
     postErrors: '',
 }
@@ -92,6 +94,27 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 postErrors: action.action,
+            }
+        case GETTING_USER_FRIENDS_START:
+            return {
+                ...state,
+                loadingFriends: true,
+            }
+        case GETTING_USER_FRIENDS_SUCCESS:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    friends: [...state.user.friends, action.payload]
+                },
+                loadingFriends: false,
+                errors: '',
+            }
+        case GETTING_USER_FRIENDS_FAILED:
+            return {
+                ...state,
+                error: action.payload,
+                loadingFriends: false,
             }
         default:
             return state;

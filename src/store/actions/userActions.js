@@ -20,6 +20,10 @@ export const POST_ANIME_START = 'POST_ANIME_START';
 export const POST_ANIME_SUCCESS = 'POST_ANIME_SUCCESS';
 export const POST_ANIME_ERROR = 'POST_ANIME_ERROR';
 
+export const GETTING_USER_FRIENDS_START = "GETTING_USER_FRIENDS_START";
+export const GETTING_USER_FRIENDS_SUCCESS = "GETTING_USER_FRIENDS_SUCCESS";
+export const GETTING_USER_FRIENDS_FAILED = "GETTING_USER_FRIENDS_FAILED";
+
 export const handleLogin = (user) => (dispatch) => {
     axios.post('https://animenu.herokuapp.com/api/users/login', user)
         .then(res => {
@@ -55,6 +59,17 @@ export const getUserData = (id) => (dispatch) => {
         })
         .catch(err => {
             dispatch({type: GETTING_USER_FAILED, payload: err.message})
+        })
+}
+
+export const fetchUserFriends = (id) => (dispatch) => {
+    dispatch({type: GETTING_USER_FRIENDS_START})
+    axios.get(`https://animenu.herokuapp.com/api/friends/${id}`)
+        .then(res => {
+            dispatch({type: GETTING_USER_FRIENDS_SUCCESS, payload: res.data})
+        })
+        .catch(err => {
+            dispatch({type: GETTING_USER_FRIENDS_FAILED, payload: err.message})
         })
 }
 
