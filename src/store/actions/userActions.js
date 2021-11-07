@@ -29,6 +29,10 @@ export const GETTING_USER_FRIENDS_START = "GETTING_USER_FRIENDS_START";
 export const GETTING_USER_FRIENDS_SUCCESS = "GETTING_USER_FRIENDS_SUCCESS";
 export const GETTING_USER_FRIENDS_FAILED = "GETTING_USER_FRIENDS_FAILED";
 
+export const DELETE_ANIME_START = "DELETE_ANIME_START";
+export const DELETE_ANIME_SUCCESS = "DELETE_ANIME_SUCCESS";
+export const DELETE_ANIME_ERROR = "DELETE_ANIME_ERROR";
+
 export const handleLogin = (user) => (dispatch) => {
     axios.post('https://animenu.herokuapp.com/api/users/login', user)
         .then(res => {
@@ -43,8 +47,8 @@ export const handleLogin = (user) => (dispatch) => {
 export const logOut = () => {
     return {type: LOG_OUT_SUCCESS, payload: false}
 }
-export const editing = () => {
-    return {type: EDITING_CHANGE, payload: true}
+export const editing = (bool) => {
+    return {type: EDITING_CHANGE, payload: bool}
 }
 
 export const handleRegister = (user) => (dispatch) => {
@@ -61,7 +65,7 @@ export const handleRegister = (user) => (dispatch) => {
 // Anime Crud
 export const getUserData = (id) => (dispatch) => {
     dispatch({type: GETTING_USER_START})
-    axios.get(`https://animenu.herokuapp.com/api/users/${id}`)
+    axiosWithAuth().get(`https://animenu.herokuapp.com/api/users/${id}`)
         .then(res => {
             dispatch({type: GETTING_USER_SUCCESS, payload: res.data})
         })
@@ -72,12 +76,12 @@ export const getUserData = (id) => (dispatch) => {
 
 export const fetchUserFriends = (id) => (dispatch) => {
     dispatch({type: GETTING_USER_FRIENDS_START})
-    axios.get(`https://animenu.herokuapp.com/api/friends/${id}`)
+    axiosWithAuth().get(`https://animenu.herokuapp.com/api/friends/${id}`)
         .then(res => {
             dispatch({type: GETTING_USER_FRIENDS_SUCCESS, payload: res.data})
         })
         .catch(err => {
-            dispatch({type: GETTING_USER_FRIENDS_FAILED, payload: err.message})
+            dispatch({type: GETTING_USER_FRIENDS_FAILED, payload: err})
         })
 }
 
@@ -115,5 +119,15 @@ export const updateAnime = (id, anime) => (dispatch) => {
             dispatch({type: PUT_ANIME_SUCCESS, payload: {list_id: res.data[0].list_id, rest, idx}})
         }).catch(error => {
             dispatch({type: PUT_ANIME_ERROR, action: error.response.data.message})
+        })
+}
+
+export const deleteAnime = (id, anime_id) => (dispatch) => {
+    dispatch({ type: DELETE_ANIME_START })
+    axiosWithAuth().delete(`https://animenu.herokuapp.com/api/lists/${id}`)
+        .then(res => {
+            dispatch({type: DELETE_ANIME_SUCCESS, payload: anime_id})
+        }).catch(error => {
+            dispatch({type: DELETE_ANIME_ERROR, action: error.response.data.message})
         })
 }

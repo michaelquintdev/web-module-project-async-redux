@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {useState} from 'react';
-import {updateAnime, editing} from '../store/actions/userActions'
+import {updateAnime, editing, deleteAnime} from '../store/actions/userActions'
 
 const initialState = {
     user_id: 0,
@@ -9,7 +9,7 @@ const initialState = {
     rating: 0,
 }
 
-function ListEntry({userAnimes, idx, user, isEditing, editing, updateAnime}) {
+function ListEntry({userAnimes, idx, user, isEditing, editing, updateAnime, deleteAnime}) {
     const [formValues, setFormValues] = useState(initialState)
 
     const onChange = (event) => {
@@ -27,10 +27,14 @@ function ListEntry({userAnimes, idx, user, isEditing, editing, updateAnime}) {
             idx: idx,
         }
         updateAnime(user.animes[idx].list_id, newAnime);
-        console.log(newAnime)
     }
+
+    // Onclicks for buttons
     const edit = () => {
-        editing();
+        editing(!isEditing);
+    }
+    const del = () => {
+        deleteAnime(user.animes[idx].list_id, user.animes[idx].anime_id)
     }
 
     return(
@@ -47,14 +51,20 @@ function ListEntry({userAnimes, idx, user, isEditing, editing, updateAnime}) {
                                 <option value='0'>No</option>
                             </select>
                             <label>Rating:</label>
-                            <input name='rating' onChange={onChange} value={formValues.rating}/>
+                            <input 
+                                name='rating' 
+                                onChange={onChange} 
+                                value={formValues.rating}
+                                placeholder={user.animes[idx].rating}
+                            />
                             <button onClick={update}>Update</button>
+                            <button onClick={edit}>Exit Editing</button>
                         </form>
                         : <div>
                             <h4>Completed: {user.animes[idx].completed === 1 ? <p>Yes</p> : <p>No</p>}</h4>
                             <h4>Rating: {user.animes[idx].rating}</h4>
                             <button onClick = {edit}>Edit</button>
-                            <button>Delete</button>
+                            <button onClick = {del}>Delete</button>
                         </div>
                         }
                         <img src={userAnimes[idx].data.image_url} alt="Movie's Poster"/>
@@ -74,4 +84,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {updateAnime, editing})(ListEntry)
+export default connect(mapStateToProps, {updateAnime, editing, deleteAnime})(ListEntry)
