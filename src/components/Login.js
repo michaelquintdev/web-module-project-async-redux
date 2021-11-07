@@ -33,9 +33,7 @@ function Login(props) {
         setInput({...input, [name]: value})
     }
     return (
-        <div>
-        <br/>
-        <div className='d-flex justify-content-center align-self-center'>
+        <div className='d-flex justify-content-center align-self-center pt-3'>
             <MDBCard className='d-flex justify-content-center align-self-center'
             alignment='center' style={{width: '50rem', height: '50vh'}}>
                     <h2>Login Below</h2>
@@ -66,7 +64,6 @@ function Login(props) {
                         {props.errors}
                     </div>
             </MDBCard>
-            </div>
             </div>
     )
 }

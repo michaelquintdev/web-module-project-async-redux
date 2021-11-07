@@ -11,7 +11,6 @@ function Card(props) {
                         <MDBCardImage src={props.anime.image_url} position='top' alt='...' />
                     </div>
                     <MDBCardBody>
-                        
                             <MDBCardTitle>{props.anime.title}</MDBCardTitle>
                         <MDBCardText>
                             Rank: {props.anime.rank}

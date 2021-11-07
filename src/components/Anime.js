@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { fetchAnime } from '../store/actions/dataAction'
 import { addAnimeToList } from '../store/actions/userActions'
 import {connect} from 'react-redux';
+import { MDBCard, MDBCardTitle, MDBCardText, MDBCardBody, MDBCardImage, MDBRow, MDBCol } from 'mdb-react-ui-kit';
 
 const initialState = {
     user_id: 0,
@@ -43,14 +44,53 @@ function Anime(props) {
     }
 
     return (
-        <div>
-            <div>
+        <>
+            <h2 className='text-center pt-3'>{props.animeData.title}</h2>
+            {props.animeData.trailer_url !== null && 
+            <>
+                <div className='p-1 d-flex justify-content-center'>
+                    <iframe width="900" height="600" src = {props.animeData.trailer_url}/>
+                </div>
+            </>}
+        <div className='p-3 d-flex justify-content-center'>
+            <MDBCard className='border' style={{ maxWidth: '80%' }} alignment='center'>
+                <MDBRow className='g0'>
+                    <MDBCol md='2'>
+                    <MDBCardImage src={props.animeData.image_url} alt='...' fluid />
+                    </MDBCol>
+                    <MDBCol md='10'>
+                    <MDBCardBody>
+                        <MDBCardText>
+                        {props.animeData.synopsis}
+                        </MDBCardText>
+                        <MDBCardText>
+                        {props.isLoggedIn && 
+                            <form> 
+                                <label>Completed:</label>
+                                <select name='completed' onChange={onChange} value={formValues.completed}>
+                                    <option value='1'>Yes</option>
+                                    <option value='0'>No</option>
+                                </select>
+                                <label>Rating:</label>
+                                <input name='rating' onChange={onChange} value={formValues.rating}/>
+                                <button onClick={onSubmit}>Add to List</button>
+                            </form>}
+                            {props.postErrors.length !== 0 ? <h4>{props.postErrors}</h4> : null}
+                        </MDBCardText>
+                    </MDBCardBody>
+                    </MDBCol>
+                </MDBRow>
+            </MDBCard>
+
+            {/* <div>
                 <h2>{props.animeData.title_english}</h2>
                 <img src = {props.animeData.image_url} alt = 'Animes cover art'/>
-            </div>
+                <h3>Synopsis</h3>
+                <p>{props.animeData.synopsis}</p>
+            </div> */}
             
 
-            {props.isLoggedIn && 
+            {/* {props.isLoggedIn && 
             <form> 
                 <label>Completed:</label>
                 <select name='completed' onChange={onChange} value={formValues.completed}>
@@ -61,13 +101,10 @@ function Anime(props) {
                 <input name='rating' onChange={onChange} value={formValues.rating}/>
                 <button onClick={onSubmit}>Add to List</button>
             </form>}
-            {props.postErrors.length !== 0 ? <h4>{props.postErrors}</h4> : null}
-            
-            <h3>Synopsis</h3>
-            <p>{props.animeData.synopsis}</p>
-            <h3>{props.animeData.title} Trailer</h3>
-            <iframe width="900" height="600" src = {props.animeData.trailer_url}/>
+            {props.postErrors.length !== 0 ? <h4>{props.postErrors}</h4> : null} */}
         </div>
+        </>
+        
     )
 }
 
