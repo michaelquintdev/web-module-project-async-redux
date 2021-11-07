@@ -22,7 +22,7 @@ function Home() {
                         <MDBCarouselElement src={image1} alt='...' />
                         <MDBCarouselCaption>
                             <h2>What is AniMenu?</h2>
-                            <p>AniMenu is a work in progress project I've been developing intermittedly since I learned React and Redux at Lambda School. It combines two APIs, one that I made that holds user and list data, and an external api called Kitsu that stores all the anime data. It doesn't encompass everything I can do on a technical level, or even perfect form in terms of code, but it's a great showcase of how much I can do in a limited amount of time since I would work on this only once or twice a month up until graduation. Currently on this site you can create an account, browse animes, add them to your list, and edit your list as you'd like. Over my job search I am going to be working on creating follower / friend functionality, as well as a restructuring of the code so the backend calls the Kitsu api as opposed to the frontend calling it. If you like to connect with me, or view the code for this project here are some links!</p>
+                            <p>AniMenu is a work in progress project I've been developing intermittedly since I learned React and Redux at Lambda School. It combines two APIs, one that I made that holds user and list data, and an external api called Kitsu that stores all the anime data. It doesn't encompass everything I can do on a technical level, or even perfect form in terms of code, but it's a great showcase of how much I can do in a limited amount of time since I would work on this only once or twice a month. Currently on this site you can create an account, browse animes, add them to your list, and edit your list as you'd like. Over my job search I am going to be working on creating follower / friend functionality, as well as a restructuring of the code so the backend calls the Kitsu api as opposed to the frontend calling it. If you like to connect with me, or view the code for this project here are some links!</p>
                             <MDBBtn className='m-1' floating style={{ backgroundColor: '#0082ca' }} href='https://www.linkedin.com/in/michaelquintdev/' target='_blank'>
                                 <MDBIcon fab icon='linkedin-in' />
                             </MDBBtn>
@@ -34,11 +34,9 @@ function Home() {
                             </MDBBtn>
                         </MDBCarouselCaption>
                     </MDBCarouselItem>
-
                     <MDBCarouselItem>
                         <MDBCarouselElement src={image2} alt='...' />
                     </MDBCarouselItem>
-
                     <MDBCarouselItem>
                         <MDBCarouselElement src={image3} alt='...' />
                         <MDBCarouselCaption>
@@ -48,7 +46,9 @@ function Home() {
                     </MDBCarouselItem>
                 </MDBCarouselInner>
             </MDBCarousel>
-            <List />
+            <div className='m-3'>
+                <List />
+            </div>
         </div>
     )
 }
