@@ -1,11 +1,26 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import { connect } from 'react-redux'
+import {useParams} from 'react-router-dom'
 
-function FriendsPage() {
+function FriendsPage(props) {
+    const {id} = useParams();
+
+    useEffect(() => {
+        
+    },[])
+
     return (
         <div>
-            heyo
+            heyo hahahah
         </div>
     )
 }
 
-export default FriendsPage
+
+const mapStateToProps = state => {
+    return {
+        
+    }
+}
+
+export default connect(mapStateToProps, {})(FriendsPage)

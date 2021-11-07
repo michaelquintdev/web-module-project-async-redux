@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {handleLogin, getUserData} from '../store/actions/userActions'
 import { useHistory } from 'react-router-dom'
+import { MDBInput, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn } from 'mdb-react-ui-kit';
 
 function Login(props) {
     const initialLogin = {username: '', password: ''}
@@ -33,27 +34,40 @@ function Login(props) {
     }
     return (
         <div>
-            <h2>Login Below</h2>
-            <form>
-                <input 
-                    type='username'
-                    name='username'
-                    onChange={changeHandler}
-                    value={input.username}
-                />
-                <input 
-                    type='password'
-                    name='password'
-                    onChange={changeHandler}
-                    value={input.password}
-                />
-                <button onClick={submitHandler}>Submit</button>
-            </form>
-            <p>Don't have an account? <Link to = '/register'>Sign Up Here</Link></p>
-            <div className = 'form-errors'>
-                {props.errors}
+        <br/>
+        <div className='d-flex justify-content-center align-self-center'>
+            <MDBCard className='d-flex justify-content-center align-self-center'
+            alignment='center' style={{width: '50rem', height: '50vh'}}>
+                    <h2>Login Below</h2>
+                    <form alignment='center' style={{maxWidth: '100%'}}>
+                        <MDBInput 
+                            label='Username'
+                            id='form1'
+                            type='text'
+                            name='username'
+                            onChange={changeHandler}
+                            value={input.username}
+                        />
+                        <br/>
+                        <MDBInput 
+                            label='Password'
+                            id='form1'
+                            type='text'
+                            name='password'
+                            onChange={changeHandler}
+                            value={input.password}
+                        />
+                        <br/>
+                        <MDBBtn onClick={submitHandler}>Submit</MDBBtn>
+                    </form>
+                    <br/>
+                    <p>Don't have an account? <Link to = '/register'>Sign Up Here</Link></p>
+                    <div className = 'form-errors'>
+                        {props.errors}
+                    </div>
+            </MDBCard>
             </div>
-        </div>
+            </div>
     )
 }
 

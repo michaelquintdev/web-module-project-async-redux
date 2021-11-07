@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
 import {connect} from 'react-redux';
 import {fetchFavoriteData, fetchUpcomingData, fetchAiringData} from '../store/actions/dataAction';
-import { Link } from 'react-router-dom';
-
-import Favorites from './ListTypes/Favorites';
-import Upcoming from './ListTypes/Upcoming';
-import Airing from './ListTypes/Airing';
+import {MDBRow} from 'mdb-react-ui-kit';
+import Card from './Card'
 
 function List(props) {
     useEffect(() => {
@@ -20,23 +17,23 @@ function List(props) {
     return (
         <div>
           <h2>Favorites</h2>
-            {props.favoriteData.map((anime, idx) => {
-                return <Link to = {`/anime/${anime.mal_id}`} key = {idx} >
-                          <Favorites key = {idx} anime = {anime} />
-                        </Link>
-            })}
+          <MDBRow className='row-cols-1 row-cols-md-6 g-4'>
+              {props.favoriteData.map((anime, idx) => {
+                  return <Card key = {idx} anime = {anime} />
+              })}
+          </MDBRow>
           <h2>Upcoming</h2>
+          <MDBRow className='row-cols-1 row-cols-md-6 g-4'>
             {props.upcomingData.map((anime, idx) => {
-                return <Link to = {`/anime/${anime.mal_id}`} key = {idx}>
-                          <Upcoming key = {idx} anime = {anime} />
-                       </Link>
+                return <Card key = {idx} anime = {anime} />
             })}
+          </MDBRow>
           <h2>Airing</h2>
+          <MDBRow className='row-cols-1 row-cols-md-6 g-4'>
             {props.airingData.map((anime, idx) => {
-                return <Link to = {`/anime/${anime.mal_id}`} key = {idx}>
-                          <Airing key = {idx} anime = {anime} />
-                       </Link>
+                return <Card key = {idx} anime = {anime} />
             })}
+          </MDBRow>
         </div>
     )
 }
