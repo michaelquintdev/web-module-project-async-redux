@@ -1,12 +1,13 @@
 import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
-import {fetchUserAnimes} from '../store/actions/userActions'
+import {fetchUserAnimes, fetchUserFriends} from '../store/actions/userActions'
 import ListEntry from './ListEntry'
 import { Link } from 'react-router-dom';
 
 function Dashboard(props) {
     useEffect(() => {
         props.fetchUserAnimes(props.user.animes)
+        props.fetchUserFriends(props.user.user_id)
     }, [])
     
     if(props.loading){
@@ -20,11 +21,12 @@ function Dashboard(props) {
     return (
         <div>
             <h1>{props.user.username}</h1>
-            <h2>Friends: {props.user.friends.map(friend => {
-                return <Link to={`/list/${friend}`}>{friend}</Link>
+            <h2>Friends: {props.user.friends.map((friend, idx) => {
+                // return <Link key = {friend} to={`/list/${friend}`}>{friend}</Link>
+                return <p key={idx}>this a friend</p>
             })}</h2>
             {props.user.animes.length === props.userAnimes.length ? props.user.animes.map((user, idx) => {
-                return <ListEntry key={user.anime_id} user={user} idx={idx}/>
+                return <ListEntry key={user.anime_id} idx={idx}/>
             }) : <h2>Loading Anime Data...</h2>}
         </div>
     )
@@ -40,4 +42,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, {fetchUserAnimes})(Dashboard)
+export default connect(mapStateToProps, {fetchUserAnimes, fetchUserFriends})(Dashboard)
