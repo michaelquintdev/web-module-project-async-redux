@@ -5,13 +5,9 @@ import {useParams} from 'react-router-dom'
 function FriendsPage(props) {
     const {id} = useParams();
 
-    useEffect(() => {
-        
-    },[])
-
     return (
         <div>
-            heyo hahahah
+            y'all see the cat on the homepage?
         </div>
     )
 }

@@ -5,9 +5,11 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_ERROR = "LOGIN_ERROR";
 export const LOG_OUT_SUCCESS = "LOG_OUT_SUCCESS";
 export const EDITING_CHANGE = "EDITING_CHANGE";
+export const RESET_MESSAGES = "RESET_MESSAGES";
 
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_ERROR = "REGISTER_ERROR";
+export const RESET_REGISTER = "RESET_REGISTER";
 
 export const GETTING_USER_START = "GETTING_USER_START";
 export const GETTING_USER_SUCCESS = "GETTING_USER_SUCCESS";
@@ -49,6 +51,12 @@ export const logOut = () => {
 }
 export const editing = (bool) => {
     return {type: EDITING_CHANGE, payload: bool}
+}
+export const resetMessages = () => {
+    return {type: RESET_MESSAGES}
+}
+export const resetRegister = () => {
+    return {type: RESET_REGISTER}
 }
 
 export const handleRegister = (user) => (dispatch) => {

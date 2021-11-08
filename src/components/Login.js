@@ -1,15 +1,20 @@
 import React, {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {handleLogin, getUserData} from '../store/actions/userActions'
+import {handleLogin, getUserData, resetRegister} from '../store/actions/userActions'
 import { useHistory } from 'react-router-dom'
-import { MDBInput, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn } from 'mdb-react-ui-kit';
+import { MDBInput, MDBCard, MDBBtn } from 'mdb-react-ui-kit';
 
 function Login(props) {
     const initialLogin = {username: '', password: ''}
     const [input, setInput] = useState(initialLogin)
     const {push} = useHistory()
     
+    // This resets isRegistered so the user can reopen the component after initially registering
+    useEffect(() => {
+        props.resetRegister();
+    },[])
+
     useEffect(() => {
         if(props.isLoggedIn){
             props.getUserData(props.id)
@@ -22,6 +27,7 @@ function Login(props) {
         }
     }, [props.userFetched])
     
+    // Form fun
     const submitHandler = (event) => {
         event.preventDefault()
         props.handleLogin(input)
@@ -60,7 +66,7 @@ function Login(props) {
                     </form>
                     <br/>
                     <p>Don't have an account? <Link to = '/register'>Sign Up Here</Link></p>
-                    <div className = 'form-errors'>
+                    <div className = 'text-danger'>
                         {props.errors}
                     </div>
             </MDBCard>
@@ -77,4 +83,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {handleLogin, getUserData})(Login)
+export default connect(mapStateToProps, {handleLogin, getUserData, resetRegister})(Login)

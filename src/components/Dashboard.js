@@ -2,16 +2,20 @@ import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
 import {fetchUserAnimes, fetchUserFriends} from '../store/actions/userActions'
 import ListEntry from './ListEntry'
-import { Link } from 'react-router-dom';
+import {MDBSpinner} from 'mdb-react-ui-kit';
 
 function Dashboard(props) {
     useEffect(() => {
         props.fetchUserAnimes(props.user.animes)
-        props.fetchUserFriends(props.user.user_id)
+        // props.fetchUserFriends(props.user.user_id)
     }, [])
     
     if(props.loading){
-        return <h1>loading...</h1>
+        return (<div className='text-center'>
+            <MDBSpinner role='status'>
+                <span className='visually-hidden'>Loading...</span>
+            </MDBSpinner>
+         </div>)
     }
 
     if(props.errors.length !== 0){
@@ -19,14 +23,21 @@ function Dashboard(props) {
     }
 
     return (
-        <div>
-            <h1>{props.user.username}</h1>
-            <h2>Friends (Work in Progress): {props.user.friends.map((friend, idx) => {
+        <div className='m-3 text-center'>
+            <h1>{props.user.username}'s List</h1>
+            {/* <h2>Friends (Work in Progress): {props.user.friends.map((friend, idx) => {
                 return <Link key = {friend} to={`/list/${friend.friend_id}`}>{friend.username}</Link>
-            })}</h2>
-            {props.user.animes.length === props.userAnimes.length ? props.user.animes.map((user, idx) => {
+            })}</h2> */}
+            
+            {props.user.animes.length === props.userAnimes.length 
+            ? props.user.animes.map((user, idx) => {
                 return <ListEntry key={user.anime_id} idx={idx}/>
-            }) : <h2>Loading Anime Data...</h2>}
+            }) 
+            : <div className='text-center'>
+                <MDBSpinner role='status'>
+                    <span className='visually-hidden'>Loading...</span>
+                </MDBSpinner>
+            </div>}
         </div>
     )
 }
