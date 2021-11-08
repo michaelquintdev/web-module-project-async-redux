@@ -1,14 +1,20 @@
 import React, {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {handleLogin, getUserData} from '../store/actions/userActions'
+import {handleLogin, getUserData, resetRegister} from '../store/actions/userActions'
 import { useHistory } from 'react-router-dom'
+import { MDBInput, MDBCard, MDBBtn } from 'mdb-react-ui-kit';
 
 function Login(props) {
     const initialLogin = {username: '', password: ''}
     const [input, setInput] = useState(initialLogin)
     const {push} = useHistory()
     
+    // This resets isRegistered so the user can reopen the component after initially registering
+    useEffect(() => {
+        props.resetRegister();
+    },[])
+
     useEffect(() => {
         if(props.isLoggedIn){
             props.getUserData(props.id)
@@ -21,6 +27,7 @@ function Login(props) {
         }
     }, [props.userFetched])
     
+    // Form fun
     const submitHandler = (event) => {
         event.preventDefault()
         props.handleLogin(input)
@@ -32,28 +39,38 @@ function Login(props) {
         setInput({...input, [name]: value})
     }
     return (
-        <div>
-            <h2>Login Below</h2>
-            <form>
-                <input 
-                    type='username'
-                    name='username'
-                    onChange={changeHandler}
-                    value={input.username}
-                />
-                <input 
-                    type='password'
-                    name='password'
-                    onChange={changeHandler}
-                    value={input.password}
-                />
-                <button onClick={submitHandler}>Submit</button>
-            </form>
-            <p>Don't have an account? <Link to = '/register'>Sign Up Here</Link></p>
-            <div className = 'form-errors'>
-                {props.errors}
+        <div className='d-flex justify-content-center align-self-center pt-3'>
+            <MDBCard className='d-flex justify-content-center align-self-center'
+            alignment='center' style={{width: '50rem', height: '50vh'}}>
+                    <h2>Login Below</h2>
+                    <form alignment='center' style={{maxWidth: '100%'}}>
+                        <MDBInput 
+                            label='Username'
+                            id='form1'
+                            type='text'
+                            name='username'
+                            onChange={changeHandler}
+                            value={input.username}
+                        />
+                        <br/>
+                        <MDBInput 
+                            label='Password'
+                            id='form1'
+                            type='text'
+                            name='password'
+                            onChange={changeHandler}
+                            value={input.password}
+                        />
+                        <br/>
+                        <MDBBtn onClick={submitHandler}>Submit</MDBBtn>
+                    </form>
+                    <br/>
+                    <p>Don't have an account? <Link to = '/register'>Sign Up Here</Link></p>
+                    <div className = 'text-danger'>
+                        {props.errors}
+                    </div>
+            </MDBCard>
             </div>
-        </div>
     )
 }
 
@@ -66,4 +83,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {handleLogin, getUserData})(Login)
+export default connect(mapStateToProps, {handleLogin, getUserData, resetRegister})(Login)

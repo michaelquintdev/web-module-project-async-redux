@@ -4,6 +4,7 @@ import { applyMiddleware, createStore} from 'redux'
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import './index.css';
+import 'mdb-react-ui-kit/dist/css/mdb.min.css'
 import App from './App';
 import reducers from './store/reducer/index'
 import thunk from 'redux-thunk'

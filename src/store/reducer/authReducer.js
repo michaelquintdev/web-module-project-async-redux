@@ -1,4 +1,4 @@
-import {LOGIN_SUCCESS, LOGIN_ERROR, LOG_OUT_SUCCESS, REGISTER_ERROR, REGISTER_SUCCESS, GETTING_USER_SUCCESS, GETTING_USER_FAILED, FETCH_USER_ANIME_START, FETCH_USER_ANIME_SUCCESS, FETCH_USER_ANIME_ERROR, POST_ANIME_SUCCESS, POST_ANIME_ERROR, GETTING_USER_FRIENDS_START, GETTING_USER_FRIENDS_SUCCESS, GETTING_USER_FRIENDS_FAILED, PUT_ANIME_SUCCESS, PUT_ANIME_ERROR, EDITING_CHANGE, DELETE_ANIME_SUCCESS, DELETE_ANIME_ERROR} from '../actions/userActions'
+import {LOGIN_SUCCESS, LOGIN_ERROR, LOG_OUT_SUCCESS, REGISTER_ERROR, REGISTER_SUCCESS, GETTING_USER_SUCCESS, GETTING_USER_FAILED, FETCH_USER_ANIME_START, FETCH_USER_ANIME_SUCCESS, FETCH_USER_ANIME_ERROR, POST_ANIME_SUCCESS, POST_ANIME_ERROR, GETTING_USER_FRIENDS_START, GETTING_USER_FRIENDS_SUCCESS, GETTING_USER_FRIENDS_FAILED, PUT_ANIME_SUCCESS, PUT_ANIME_ERROR, EDITING_CHANGE, DELETE_ANIME_SUCCESS, DELETE_ANIME_ERROR, RESET_MESSAGES, RESET_REGISTER} from '../actions/userActions'
 
 export const initialState = {
     user: {
@@ -10,7 +10,7 @@ export const initialState = {
     userAnimes: [],
     loading: false,
     loadingFriends: false,
-    message: '',
+    postSuccessMessage: '',
     userFetched: false,
     isLoggedIn: false,
     isRegistered: false,
@@ -45,6 +45,17 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isEditing: action.payload,
+            }
+        case RESET_MESSAGES:
+            return {
+                ...state,
+                postSuccessMessage: '',
+                postErrors: '',
+            }
+        case RESET_REGISTER:
+            return {
+                ...state,
+                isRegistered: false,
             }
         case REGISTER_SUCCESS:
             return {
@@ -92,6 +103,7 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 postErrors: '',
+                postSuccessMessage: 'Anime has been added to your list!',
                 user: {
                     ...state.user,
                     animes: [...state.user.animes, action.payload]
@@ -100,6 +112,7 @@ export const authReducer = (state = initialState, action) => {
         case POST_ANIME_ERROR:
             return {
                 ...state,
+                postSuccessMessage:'',
                 postErrors: action.action,
             }
         case GETTING_USER_FRIENDS_START:
