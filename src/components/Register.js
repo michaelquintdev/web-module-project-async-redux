@@ -4,7 +4,7 @@ import {reach} from 'yup'
 import schema from '../validation/formSchema'
 import { handleRegister } from '../store/actions/userActions'
 import { useHistory } from 'react-router-dom'
-import { MDBInput, MDBCard, MDBBtn } from 'mdb-react-ui-kit';
+import { MDBInput, MDBCard, MDBBtn, MDBSpinner } from 'mdb-react-ui-kit';
 
 function Register(props) {
     const initialRegister = {username: '', password: ''}
@@ -80,6 +80,14 @@ function Register(props) {
                     <div className = 'text-danger'>
                         {props.errors}
                     </div>
+                    <p className = 'text-warning'>I'm currently using the free version of Heroku, so your first time registering may take a little long due to servers starting.</p>
+                    {props.loading && 
+                        <div className='d-flex justify-content-center'>
+                            <MDBSpinner alignment='center' role='status'>
+                                <span className='visually-hidden'>Loading...</span>
+                            </MDBSpinner>
+                        </div>
+                    }
             </MDBCard>
             </div>
     )
@@ -88,7 +96,8 @@ function Register(props) {
 const mapStateToProps = (state) => {
     return{
         errors: state.authReducer.errors,
-        isRegistered: state.authReducer.isRegistered
+        isRegistered: state.authReducer.isRegistered,
+        loading: state.authReducer.loading
     }
 }
 
