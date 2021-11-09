@@ -8,7 +8,7 @@ import PrivateRoute from './components/PrivateRoute';
 import NavBar from './components/NavBar';
 import Dashboard from './components/Dashboard';
 
-function App({isLoggedIn}) {
+function App() {
 
   return (
       <div className="App">
