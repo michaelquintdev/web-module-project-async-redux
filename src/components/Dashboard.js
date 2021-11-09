@@ -7,7 +7,7 @@ import {MDBSpinner} from 'mdb-react-ui-kit';
 function Dashboard(props) {
     useEffect(() => {
         props.fetchUserAnimes(props.user.animes)
-        // props.fetchUserFriends(props.user.user_id)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     
     if(props.loading){

@@ -10,21 +10,23 @@ function Login(props) {
     const [input, setInput] = useState(initialLogin)
     const {push} = useHistory()
     
-    // This resets isRegistered so the user can reopen the component after initially registering
     useEffect(() => {
         props.resetRegister();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     useEffect(() => {
         if(props.isLoggedIn){
             props.getUserData(props.id)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.isLoggedIn])
 
     useEffect(() => {
         if(props.userFetched){
             push('/dashboard')
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.userFetched])
     
     // Form fun
