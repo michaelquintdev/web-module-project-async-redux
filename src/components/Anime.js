@@ -19,7 +19,8 @@ function Anime(props) {
     useEffect(() => {
         props.resetMessages();
         props.fetchAnime(id);
-    }, [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
 
     // Form fun
     const onChange = (event) => {
@@ -56,7 +57,7 @@ function Anime(props) {
             <h2 className='text-center pt-3'>{props.animeData.title}</h2>
             {props.animeData.trailer_url !== null && 
                 <div className='p-1 d-flex justify-content-center'>
-                    <iframe width="900" height="600" src = {props.animeData.trailer_url}/>
+                    <iframe title='Trailer'width="900" height="600" src = {props.animeData.trailer_url}/>
                 </div>}
             <div className='p-3 d-flex justify-content-center'>
                 <MDBCard className='border' style={{ maxWidth: '80%' }} alignment='center'>

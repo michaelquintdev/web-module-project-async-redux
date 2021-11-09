@@ -10,6 +10,7 @@ function List(props) {
         props.fetchFavoriteData();
         props.fetchUpcomingData();
         props.fetchAiringData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     
     // if fetch is loading will render spinner

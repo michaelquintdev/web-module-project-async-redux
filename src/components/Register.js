@@ -22,6 +22,7 @@ function Register(props) {
         if(props.isRegistered){
             push('/login')
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.isRegistered])
 
     // Form Fun
