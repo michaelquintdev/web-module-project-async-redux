@@ -55,11 +55,9 @@ function Anime(props) {
         <>
             <h2 className='text-center pt-3'>{props.animeData.title}</h2>
             {props.animeData.trailer_url !== null && 
-            <>
                 <div className='p-1 d-flex justify-content-center'>
                     <iframe width="900" height="600" src = {props.animeData.trailer_url}/>
-                </div>
-            </>}
+                </div>}
             <div className='p-3 d-flex justify-content-center'>
                 <MDBCard className='border' style={{ maxWidth: '80%' }} alignment='center'>
                     <MDBRow className='g0'>
@@ -71,7 +69,6 @@ function Anime(props) {
                             <MDBCardText>
                             {props.animeData.synopsis}
                             </MDBCardText>
-                            <MDBCardText>
                             {props.isLoggedIn && 
                                 <form> 
                                     <label>Completed:</label>
@@ -85,7 +82,6 @@ function Anime(props) {
                                 </form>}
                                 {props.postErrors.length !== 0 ? <h4 className='text-danger'>{props.postErrors}</h4> : null}
                                 {props.postSuccessMessage.length !== 0 ? <h4 className='text-success'>{props.postSuccessMessage}</h4> : null}
-                            </MDBCardText>
                         </MDBCardBody>
                         </MDBCol>
                     </MDBRow>

@@ -1,8 +1,7 @@
 import { dataReducer } from "./dataReducer";
 import { authReducer } from "./authReducer";
-import { profileReducer } from "./profileReducer";
 import { combineReducers } from "redux";
 
-const reducers = combineReducers({dataReducer, authReducer, profileReducer})
+const reducers = combineReducers({dataReducer, authReducer})
 
 export default reducers
