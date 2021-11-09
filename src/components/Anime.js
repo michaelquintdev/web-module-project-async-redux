@@ -3,7 +3,9 @@ import { useParams } from 'react-router-dom'
 import { fetchAnime } from '../store/actions/dataAction'
 import { addAnimeToList, resetMessages } from '../store/actions/userActions'
 import {connect} from 'react-redux';
-import { MDBCard, MDBSpinner, MDBCardText, MDBCardBody, MDBCardImage, MDBRow, MDBCol } from 'mdb-react-ui-kit';
+import { MDBCard, MDBSpinner, MDBCardText, MDBCardBody, MDBCardImage, MDBRow, MDBBtn, MDBCol } from 'mdb-react-ui-kit';
+import {reach} from 'yup'
+import schema from '../validation/postSchema'
 
 const initialState = {
     user_id: 0,
@@ -14,6 +16,8 @@ const initialState = {
 
 function Anime(props) {
     const [formValues, setFormValues] = useState(initialState)
+    const [formErrors, setFormErrors] = useState('')
+    const [disabled, setDisabled] = useState(true)
     const { id } = useParams();
 
     useEffect(() => {
@@ -22,10 +26,23 @@ function Anime(props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
+    useEffect(() => {
+        schema.isValid(formValues).then(valid => setDisabled(!valid))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [formValues])
+
     // Form fun
     const onChange = (event) => {
         const {name, value} = event.target;
+        validate(name, value)
         setFormValues({...formValues, [name]: value})
+    }
+
+    const validate = (name, value) => {
+        reach(schema, name)
+            .validate(value)
+            .then(() => setFormErrors({...formErrors, [name]: '' }))
+            .catch(err => setFormErrors({...formErrors, [name]: err.errors[0]}))
     }
 
     const onSubmit = (event) => {
@@ -73,14 +90,17 @@ function Anime(props) {
                             {props.isLoggedIn && 
                                 <form> 
                                     <label>Completed:</label>
-                                    <select name='completed' onChange={onChange} value={formValues.completed}>
+                                    <select className='m-2' name='completed' onChange={onChange} value={formValues.completed}>
                                         <option value='1'>Yes</option>
                                         <option value='0'>No</option>
                                     </select>
                                     <label>Rating:</label>
                                     <input name='rating' onChange={onChange} value={formValues.rating}/>
-                                    <button onClick={onSubmit}>Add to List</button>
+                                    <MDBBtn className='ms-2' disabled={disabled} onClick={onSubmit}>
+                                        Add to List
+                                    </MDBBtn>
                                 </form>}
+                                <p className='text-danger'>{formErrors.rating}</p>
                                 {props.postErrors.length !== 0 ? <h4 className='text-danger'>{props.postErrors}</h4> : null}
                                 {props.postSuccessMessage.length !== 0 ? <h4 className='text-success'>{props.postSuccessMessage}</h4> : null}
                         </MDBCardBody>
