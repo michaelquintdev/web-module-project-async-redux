@@ -78,7 +78,7 @@ export const getUserData = (id) => (dispatch) => {
             dispatch({type: GETTING_USER_SUCCESS, payload: res.data})
         })
         .catch(err => {
-            dispatch({type: GETTING_USER_FAILED, payload: err.message})
+            dispatch({type: GETTING_USER_FAILED, payload: err.response.data.message})
         })
 }
 

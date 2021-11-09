@@ -25,9 +25,6 @@ function Dashboard(props) {
     return (
         <div className='m-3 text-center'>
             <h1>{props.user.username}'s List</h1>
-            {/* <h2>Friends (Work in Progress): {props.user.friends.map((friend, idx) => {
-                return <Link key = {friend} to={`/list/${friend.friend_id}`}>{friend.username}</Link>
-            })}</h2> */}
             
             {props.user.animes.length === props.userAnimes.length 
             ? props.user.animes.map((user, idx) => {
