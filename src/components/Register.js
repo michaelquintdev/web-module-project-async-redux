@@ -67,7 +67,7 @@ function Register(props) {
                         <MDBInput 
                             label='Password'
                             id='form1'
-                            type='text'
+                            type='password'
                             name='password'
                             onChange={changeHandler}
                             value={input.password}
