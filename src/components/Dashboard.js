@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 function Dashboard(props) {
     useEffect(() => {
         props.resetUserAnimes();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     if(props.errors.length !== 0){
