@@ -1,20 +1,23 @@
 import {connect} from 'react-redux';
-import {useState} from 'react';
-import {updateAnime, editing, deleteAnime} from '../store/actions/userActions'
-import { MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBRow, MDBCol, MDBCardTitle, MDBBtn, MDBIcon} from 'mdb-react-ui-kit';
+import {useState, useEffect} from 'react';
+import {updateAnime, editing, deleteAnime, fetchUserAnime} from '../store/actions/userActions'
+import { MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBRow, MDBCol, MDBCardTitle, MDBBtn, MDBIcon, MDBSpinner} from 'mdb-react-ui-kit';
 
-
-
-function ListEntry({userAnimes, idx, user, isEditing, editing, updateAnime, deleteAnime}) {
+function ListEntry({userAnimes, idx, user, isEditing, editing, updateAnime, deleteAnime, fetchUserAnime, loading}) {
     const initialState = {
         user_id: 0,
         anime_id: 0,
         completed: 0,
         rating: user.animes[idx].rating,
     }
-
     const [formValues, setFormValues] = useState(initialState)
 
+
+    useEffect(() => {
+        fetchUserAnime(user.animes[idx].anime_id)
+    }, [])
+
+    // Form fun
     const onChange = (event) => {
         const {name, value} = event.target;
         setFormValues({...formValues, [name]: value})
@@ -42,18 +45,25 @@ function ListEntry({userAnimes, idx, user, isEditing, editing, updateAnime, dele
 
     return(
         <div className='p-3 d-flex justify-content-center'>
-            <MDBCard className='border' style={{ maxWidth: '80%' }} alignment='center'>
+            {userAnimes.length !== user.animes.length ? 
+                <div className='text-center'>
+                    <MDBSpinner role='status'>
+                        <span className='visually-hidden'>Loading...</span>
+                    </MDBSpinner>
+                </div> 
+                : 
+                <MDBCard className='border' style={{ maxWidth: '80%' }} alignment='center'>
                 <MDBRow className='g0'>
                     <MDBCol md='2'>
-                        <MDBCardImage src={userAnimes[idx].data.image_url} alt='...' fluid />
+                        <MDBCardImage src={userAnimes[idx].image_url} alt='...' fluid />
                     </MDBCol>
                     <MDBCol md='10'>
                     <MDBCardBody>
                         <MDBCardTitle>
-                            {userAnimes[idx].data.title}
+                            {userAnimes[idx].title}
                         </MDBCardTitle>
                         <MDBCardText>
-                            {userAnimes[idx].data.synopsis}
+                            {userAnimes[idx].synopsis}
                         </MDBCardText>
                         {isEditing 
                             ? <form> 
@@ -102,7 +112,7 @@ function ListEntry({userAnimes, idx, user, isEditing, editing, updateAnime, dele
                         </MDBCardBody>
                     </MDBCol>
                 </MDBRow>
-            </MDBCard>
+            </MDBCard>}
         </div>
     )
 }
@@ -111,8 +121,9 @@ const mapStateToProps = (state) => {
     return {
         userAnimes: state.authReducer.userAnimes,
         user: state.authReducer.user,
+        loading: state.authReducer.loading,
         isEditing: state.authReducer.isEditing,
     }
 }
 
-export default connect(mapStateToProps, {updateAnime, editing, deleteAnime})(ListEntry)
+export default connect(mapStateToProps, {fetchUserAnime, updateAnime, editing, deleteAnime})(ListEntry)
