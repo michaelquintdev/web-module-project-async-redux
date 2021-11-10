@@ -2,8 +2,10 @@ import {connect} from 'react-redux';
 import {useState, useEffect} from 'react';
 import {updateAnime, editing, deleteAnime, fetchUserAnime} from '../store/actions/userActions'
 import { MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBRow, MDBCol, MDBCardTitle, MDBBtn, MDBIcon, MDBSpinner} from 'mdb-react-ui-kit';
+import schema from '../validation/postUpdateSchema'
+import {reach} from 'yup'
 
-function ListEntry({userAnimes, idx, user, isEditing, editing, updateAnime, deleteAnime, fetchUserAnime, loading}) {
+function ListEntry({userAnimes, idx, user, isEditing, editing, updateAnime, deleteAnime, fetchUserAnime}) {
     const initialState = {
         user_id: 0,
         anime_id: 0,
@@ -11,16 +13,31 @@ function ListEntry({userAnimes, idx, user, isEditing, editing, updateAnime, dele
         rating: user.animes[idx].rating,
     }
     const [formValues, setFormValues] = useState(initialState)
-
+    const [formErrors, setFormErrors] = useState('')
+    const [disabled, setDisabled] = useState(true)
 
     useEffect(() => {
         fetchUserAnime(user.animes[idx].anime_id)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    useEffect(() => {
+        schema.isValid(formValues).then(valid => setDisabled(!valid))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [formValues])
 
     // Form fun
     const onChange = (event) => {
         const {name, value} = event.target;
+        validate(name, value)
         setFormValues({...formValues, [name]: value})
+    }
+
+    const validate = (name, value) => {
+        reach(schema, name)
+            .validate(value)
+            .then(() => setFormErrors({...formErrors, [name]: '' }))
+            .catch(err => setFormErrors({...formErrors, [name]: err.errors[0]}))
     }
 
     // Onclicks for buttons
@@ -48,7 +65,7 @@ function ListEntry({userAnimes, idx, user, isEditing, editing, updateAnime, dele
             {userAnimes.length !== user.animes.length ? 
                 <div className='text-center'>
                     <MDBSpinner role='status'>
-                        <span className='visually-hidden'>Loading...</span>
+                        <span className='visually-hidden'>Fetching Anime...</span>
                     </MDBSpinner>
                 </div> 
                 : 
@@ -79,8 +96,7 @@ function ListEntry({userAnimes, idx, user, isEditing, editing, updateAnime, dele
                                     onChange={onChange} 
                                     value={formValues.rating}
                                 />
-
-                                <MDBBtn className='mx-3' onClick={update}>
+                                <MDBBtn disabled={disabled} className='mx-3' onClick={update}>
                                     Update
                                 </MDBBtn>
                                 <MDBIcon 
@@ -88,6 +104,7 @@ function ListEntry({userAnimes, idx, user, isEditing, editing, updateAnime, dele
                                     onClick={edit} 
                                     style={{cursor: 'pointer'}}
                                 />
+                                <p className='text-danger'>{formErrors.rating}</p>
                             </form>
                             : <div className='d-inline-flex'>
                                 <h4 className='mx-2'>Completed: {user.animes[idx].completed === 1 ? <>Yes</> : <>No</>}</h4>
