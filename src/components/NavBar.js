@@ -13,12 +13,13 @@ function NavBar({isLoggedIn, logOut}) {
     }
 
     return (
-        <div>
-            <Link to = '/'>AniMenu</Link>
-            <nav>
-                { !isLoggedIn && <Link to='/login'>Login</Link>}
-                { isLoggedIn ? <Link onClick = {handleLogout}>Log Out</Link> : <Link to = '/register'>Register</Link>}
+        <div className='d-flex flex-row ps-3 my-3'>
+            <h4><Link to = '/'>AniMenu</Link></h4>
+            <nav><h5 className = 'pt-1'>
+                { !isLoggedIn && <Link className='mx-4' to='/login'>Login</Link>}
+                { isLoggedIn ? <Link className='mx-4' to= '/' onClick = {handleLogout}>Log Out</Link> : <Link to = '/register'>Register</Link>}
                 { isLoggedIn && <Link to="/dashboard">Dashboard</Link>}
+                </h5>
             </nav>
         </div>
     )
@@ -29,5 +30,4 @@ const mapStateToProps = (state) => {
       isLoggedIn: state.authReducer.isLoggedIn,
     }
   }
-
 export default connect(mapStateToProps, {logOut})(NavBar);
